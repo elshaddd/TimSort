@@ -1,36 +1,28 @@
-#include "Timsort.h"
+#include <algorithm>
+
+#define MINRUN 32
 
 int minRunLength(int n)
 {
-    if (n > 0 && n < 65)
-        return MINRUN;
+    // if (n > 0 && n < 65)
+    //     return MINRUN;
 
-    int flag = 0;
-    while (n >= 64)
-    {
-        flag |= n & 1;
-        n >>= 1;
-    }
-    return n + flag;
+    // int flag = 0;
+    // while (n >= 64)
+    // {
+    //     flag |= n & 1;
+    //     n >>= 1;
+    // }
+    // return n + flag;
+    return MINRUN;
 }
 
-bool comparator(int a, int b)
-{
-    int squareA = a * a;
-    int squareB = b * b;
-    if (squareA == squareB)
-    {
-        return a > b ? false : true;
-    }
-    return squareA > squareB;
-}
-
-void insertionSort(int *arr, int left, int right)
+void insertionSort(int *arr, int left, int right, bool (*comparator)(int,int))
 {
     for (int i = left + 1; i <= right; i++)
     {
         int j = i - 1;
-        while (j >= left && comparator(arr[j], arr[j + 1])) //   arr[j] * arr[j] > temp * temp
+        while (j >= left && comparator(arr[j], arr[j + 1]))
         {
             std::swap(arr[j + 1], arr[j]);
             j--;
@@ -38,12 +30,10 @@ void insertionSort(int *arr, int left, int right)
     }
 }
 
-void merge(int *arr, int left, int mid, int right)
+void merge(int *arr, int left, int mid, int right, bool (*comparator)(int,int))
 {
     int len1 = mid - left + 1, len2 = right - mid;
-
     int *leftArr = new int[len1];
-    int *rightArr = new int[len2];
 
     // static int num = 0;
     // std::cout << "Part " << num++ << ": ";
@@ -61,47 +51,34 @@ void merge(int *arr, int left, int mid, int right)
     //     std::cout << "Part " << num++ << ": ";
     //     for (int i = 0; i < len2; i++)
     //     {
-    //         rightArr[i] = arr[mid + 1 + i];
-    //         std::cout << rightArr[i];
+    //         std::cout << arr[mid + 1 + i];
     //         if (i < len2 - 1)
     //             std::cout << ' ';
     //     }
     //     std::cout << '\n';
     // }
 
-    static int num = 0;
     for (int i = 0; i < len1; i++)
     {
         leftArr[i] = arr[left + i];
     }
 
-    if (len2)
+    int i = 0, j = mid + 1, k = left;
+    while (i < len1 && j <= right)
     {
-        for (int i = 0; i < len2; i++)
-        {
-            rightArr[i] = arr[mid + 1 + i];
-        }
-    }
-
-    int i = 0, j = 0, k = left;
-    while (i < len1 && j < len2)
-    {
-        if (comparator(rightArr[j], leftArr[i]))
+        if (comparator(arr[j], leftArr[i]))
             arr[k] = leftArr[i++];
         else
-            arr[k] = rightArr[j++];
+            arr[k] = arr[j++];
         k++;
     }
     while (i < len1)
         arr[k++] = leftArr[i++];
-    while (j < len2)
-        arr[k++] = rightArr[j++];
 
     delete[] leftArr;
-    delete[] rightArr;
 }
 
-void customSort(int *arr, int n)
+void customSort(int *arr, int n, bool (*comparator)(int,int))
 {
     int current = 0;
 
@@ -127,15 +104,19 @@ void customSort(int *arr, int n)
             current = std::min(start + minRunLength(n) - 1, n - 1);
         }
 
-        insertionSort(arr, start, current);
+        insertionSort(arr, start, current, comparator);
 
         current = current + 1;
     }
 }
 
-void timsort(int *arr, int n)
+void timsort(int *arr, int n, bool (*comparator)(int,int))
 {
-    customSort(arr, n);
+    if (!n)
+    {
+        return;
+    }
+    customSort(arr, n, comparator);
     for (int size = std::min(minRunLength(n), n); size <= n; size = 2 * size)
     {
         for (int left = 0; left < n; left += 2 * size)
@@ -144,7 +125,7 @@ void timsort(int *arr, int n)
             int mid = left + size - 1;
             if (left + size > n)
                 mid = left + (right - left) / 2;
-            merge(arr, left, mid, right);
+            merge(arr, left, mid, right, comparator);
         }
     }
 }
