@@ -15,25 +15,25 @@ int main()
         std::cout << '\n';
     }
 
-    // for (int i = 10; i <= 10000000; i *= 100)
-    // {
-    //     std::cout << "std::sort random " << i << ": ";
-    //     resSort(i);
-    //     std::cout << "std::sort already sorted " << i << ": ";
-    //     resSortAsc(i);
-    //     std::cout << "std::sort reversed " << i << ": ";
-    //     resSortDes(i);
-    //     std::cout << '\n';
-    // }
+    for (int i = 10; i <= 10000000; i *= 100)
+    {
+        std::cout << "std::sort random " << i << ": ";
+        resSort(i);
+        std::cout << "std::sort already sorted " << i << ": ";
+        resSortAsc(i);
+        std::cout << "std::sort reversed " << i << ": ";
+        resSortDes(i);
+        std::cout << '\n';
+    }
 
-    // for (int i = 10; i <= 10000000; i *= 100)
-    // {
-    //     std::cout << "std::stable_sort random " << i << ": ";
-    //     resSort(i);
-    //     std::cout << "std::stable_sort already sorted " << i << ": ";
-    //     resStableSortAsc(i);
-    //     std::cout << "std::stable_sort reversed " << i << ": ";
-    //     resStableSortDes(i);
-    //     std::cout << '\n';
-    // }
+    for (int i = 10; i <= 10000000; i *= 100)
+    {
+        std::cout << "std::stable_sort random " << i << ": ";
+        resSort(i);
+        std::cout << "std::stable_sort already sorted " << i << ": ";
+        resStableSortAsc(i);
+        std::cout << "std::stable_sort reversed " << i << ": ";
+        resStableSortDes(i);
+        std::cout << '\n';
+    }
 }

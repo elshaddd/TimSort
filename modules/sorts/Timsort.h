@@ -1,20 +1,20 @@
 #include <algorithm>
 
-#define MINRUN 64
+#define MINRUN 32
 
 int minRunLength(int n)
 {
-    // if (n > 0 && n < 65)
-    //     return MINRUN;
+    if (n > 0 && n < 65)
+        return MINRUN;
 
-    // int flag = 0;
-    // while (n >= 64)
-    // {
-    //     flag |= n & 1;
-    //     n >>= 1;
-    // }
-    // return n + flag;
-    return MINRUN;
+    int flag = 0;
+    while (n >= 64)
+    {
+        flag |= n & 1;
+        n >>= 1;
+    }
+    return n + flag;
+    // return MINRUN;
 }
 
 void insertionSort(int *arr, int left, int right, bool (*comparator)(int, int))
