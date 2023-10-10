@@ -1,6 +1,6 @@
 #include <algorithm>
 
-#define MINRUN 32
+#define MINRUN 64
 
 int minRunLength(int n)
 {
@@ -17,12 +17,12 @@ int minRunLength(int n)
     return MINRUN;
 }
 
-void insertionSort(int *arr, int left, int right, bool (*comparator)(int,int))
+void insertionSort(int *arr, int left, int right, bool (*comparator)(int, int))
 {
     for (int i = left + 1; i <= right; i++)
     {
         int j = i - 1;
-        while (j >= left && comparator(arr[j], arr[j + 1]))
+        while (j >= left && comparator(arr[j+1], arr[j]))
         {
             std::swap(arr[j + 1], arr[j]);
             j--;
@@ -30,7 +30,7 @@ void insertionSort(int *arr, int left, int right, bool (*comparator)(int,int))
     }
 }
 
-void merge(int *arr, int left, int mid, int right, bool (*comparator)(int,int))
+void merge(int *arr, int left, int mid, int right, bool (*comparator)(int, int))
 {
     int len1 = mid - left + 1, len2 = right - mid;
     int *leftArr = new int[len1];
@@ -67,9 +67,9 @@ void merge(int *arr, int left, int mid, int right, bool (*comparator)(int,int))
     while (i < len1 && j <= right)
     {
         if (comparator(arr[j], leftArr[i]))
-            arr[k] = leftArr[i++];
-        else
             arr[k] = arr[j++];
+        else
+            arr[k] = leftArr[i++];
         k++;
     }
     while (i < len1)
@@ -78,25 +78,27 @@ void merge(int *arr, int left, int mid, int right, bool (*comparator)(int,int))
     delete[] leftArr;
 }
 
-void customSort(int *arr, int n, bool (*comparator)(int,int))
+void customSort(int *arr, int n, bool (*comparator)(int, int))
 {
     int current = 0;
 
     while (current < n)
     {
         int start = current;
-        while (current < n - 1 && comparator(arr[current], arr[current + 1]))
+        while (current < n - 1 && comparator(arr[current], arr[current+1]))
         {
             current++;
         }
 
         if (current == start)
         {
-            while (current < n - 1 && comparator(arr[current + 1], arr[current]))
+            while (current < n - 1 && comparator(arr[current+1], arr[current]))
             {
                 current++;
             }
-            std::reverse(arr + start, arr + current);
+            int j = current - start;
+            for (int i = start; i < (current - start + 1) / 2; i++, j--)
+                std::swap(arr[i], arr[j]);
         }
 
         if (current - start + 1 < minRunLength(n))
@@ -110,7 +112,7 @@ void customSort(int *arr, int n, bool (*comparator)(int,int))
     }
 }
 
-void timsort(int *arr, int n, bool (*comparator)(int,int))
+void timsort(int *arr, int n, bool (*comparator)(int, int))
 {
     if (!n)
     {

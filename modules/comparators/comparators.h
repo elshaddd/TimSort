@@ -1,32 +1,19 @@
 bool ascending(int a, int b)
 {
-    int squareA = a * a;
-    int squareB = b * b;
-    if (squareA == squareB)
+    int f = abs(a), s = abs(b);
+    if (f == s)
     {
-        return a > b ? false : true;
+        return a > b;
     }
-    return squareA > squareB;
+    return f < s;
 }
 
 bool descending(int a, int b)
 {
-    int squareA = a * a;
-    int squareB = b * b;
-    if (squareA == squareB)
-    {
-        return a > b ? true : false;
-    }
-    return squareA < squareB;
-}
-
-bool cmp(int a, int b) // for tests
-{
-    int squareA = a * a;
-    int squareB = b * b;
-    if (squareA == squareB)
+    int f = abs(a), s = abs(b);
+    if (f == s)
     {
         return a > b;
     }
-    return squareA < squareB;
+    return f > s;
 }

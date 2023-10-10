@@ -1,51 +1,64 @@
 #include "../modules/sorts/Timsort.h"
-#include "../modules/sorts/QuickSort.h"
-#include "../modules/sorts/MergeSort.h"
 #include "../modules/comparators/comparators.h"
 #include <chrono>
 #include <vector>
 #include <iostream>
 
-int GetRandomNumber(const int from, const int to)
+std::vector<int> generic(int n)
 {
-    if (to == from)
-        return to;
+    std::vector<int> vec;
+    for (int i = 0; i < n; i++)
+    {
+        vec.push_back(rand() % 201 - 100);
+    }
+    return vec;
+}
 
-    if (to < from)
-        return GetRandomNumber(to, from);
+void getTime(int *arr, int n, void (*someSort)(int *, int, bool (*comparator)(int, int)))
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    someSort(arr, n, ascending);
+    auto elapsed = std::chrono::high_resolution_clock::now() - start;
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << "ms" << '\n';
+}
 
-    return from + rand() % (to - from + 1);
+void getTime(std::vector<int>::iterator arr, std::vector<int>::iterator end, void (*someSort)(std::vector<int>::iterator, std::vector<int>::iterator, bool (*comparator)(int, int)))
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    someSort(arr, end, ascending);
+    auto elapsed = std::chrono::high_resolution_clock::now() - start;
+    std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << "ms" << '\n';
 }
 
 void resTimsort(int n)
 {
-    int *arr = new int[n];
-    for (int i = 0; i < n; i++)
-    {
-        arr[i] = GetRandomNumber(-5, 5);
-    }
+    std::vector<int> vec = generic(n);
 
-    auto start = std::chrono::high_resolution_clock::now();
-    timsort(arr, n, ascending);
-    auto elapsed = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Time: " << std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count() << '\n';
-    delete[] arr;
+    getTime(vec.data(), n, timsort);
 }
 
-void resQuickSort(int n)
+void resTimsortAsc(int n)
 {
-    int *arr = new int[n];
+    std::vector<int> vec;
     for (int i = 0; i < n; i++)
     {
-        arr[i] = GetRandomNumber(-5, 5);
+        vec.push_back(rand() % 201 - 100);
     }
+    std::sort(vec.begin(), vec.end(), ascending);
 
-    auto start = std::chrono::high_resolution_clock::now();
-    quickSort(arr, 0, n - 1);
-    auto elapsed = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Time: " << std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count() << '\n';
+    getTime(vec.data(), n, timsort);
+}
 
-    delete[] arr;
+void resTimsortDes(int n)
+{
+    std::vector<int> vec;
+    for (int i = 0; i < n; i++)
+    {
+        vec.push_back(rand() % 201 - 100);
+    }
+    std::sort(vec.begin(), vec.end(), descending);
+
+    getTime(vec.data(), n, timsort);
 }
 
 void resSort(int n)
@@ -53,29 +66,34 @@ void resSort(int n)
     std::vector<int> vec;
     for (int i = 0; i < n; i++)
     {
-        vec.push_back(GetRandomNumber(-5, 5));
+        vec.push_back(rand() % 201 - 100);
     }
 
-    auto start = std::chrono::high_resolution_clock::now();
-    std::sort(vec.begin(), vec.end());
-    auto elapsed = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Time: " << std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count() << '\n';
+    getTime(vec.begin(), vec.end(),std::sort);
 }
 
-void resMergeSort(int n)
+void resSortAsc(int n)
 {
-    int *arr = new int[n];
+    std::vector<int> vec;
     for (int i = 0; i < n; i++)
     {
-        arr[i] = GetRandomNumber(-5, 5);
+        vec.push_back(rand() % 201 - 100);
     }
+    std::sort(vec.begin(), vec.end(), ascending);
 
-    auto start = std::chrono::high_resolution_clock::now();
-    mergeSort(arr, 0, n - 1);
-    auto elapsed = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Time: " << std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count() << '\n';
+    getTime(vec.begin(), vec.end(),std::sort);
+}
 
-    delete[] arr;
+void resSortDes(int n)
+{
+    std::vector<int> vec;
+    for (int i = 0; i < n; i++)
+    {
+        vec.push_back(rand() % 201 - 100);
+    }
+    std::sort(vec.begin(), vec.end(), descending);
+
+    getTime(vec.begin(), vec.end(),std::sort);
 }
 
 void resStableSort(int n)
@@ -83,11 +101,32 @@ void resStableSort(int n)
     std::vector<int> vec;
     for (int i = 0; i < n; i++)
     {
-        vec.push_back(GetRandomNumber(-5, 5));
+        vec.push_back(rand() % 201 - 100);
     }
 
-    auto start = std::chrono::high_resolution_clock::now();
+    getTime(vec.begin(), vec.end(),std::stable_sort);
+}
+
+void resStableSortAsc(int n)
+{
+    std::vector<int> vec;
+    for (int i = 0; i < n; i++)
+    {
+        vec.push_back(rand() % 201 - 100);
+    }
     std::stable_sort(vec.begin(), vec.end(), ascending);
-    auto elapsed = std::chrono::high_resolution_clock::now() - start;
-    std::cout << "Time: " << std::chrono::duration_cast<std::chrono::microseconds>(elapsed).count() << '\n';
+
+    getTime(vec.begin(), vec.end(),std::stable_sort);
+}
+
+void resStableSortDes(int n)
+{
+    std::vector<int> vec;
+    for (int i = 0; i < n; i++)
+    {
+        vec.push_back(rand() % 201 - 100);
+    }
+    std::stable_sort(vec.begin(), vec.end(), descending);
+
+    getTime(vec.begin(), vec.end(),std::stable_sort);
 }
