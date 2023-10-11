@@ -1,3 +1,6 @@
+#ifndef COMPARATORS_H
+#define COMPARATORS_H
+
 bool ascending(int a, int b)
 {
     int f = abs(a), s = abs(b);
@@ -17,3 +20,5 @@ bool descending(int a, int b)
     }
     return f > s;
 }
+
+#endif

@@ -1,7 +1,10 @@
+#ifndef RESEARCH_H
+#define RESEARCH_H
 #include "../modules/sorts/Timsort.h"
 #include "../modules/comparators/comparators.h"
-#include <chrono>
+#include <algorithm>
 #include <vector>
+#include <chrono>
 #include <iostream>
 
 std::vector<int> generic(int n)
@@ -69,7 +72,7 @@ void resSort(int n)
         vec.push_back(rand() % 201 - 100);
     }
 
-    getTime(vec.begin(), vec.end(),std::sort);
+    getTime(vec.begin(), vec.end(), std::sort);
 }
 
 void resSortAsc(int n)
@@ -81,7 +84,7 @@ void resSortAsc(int n)
     }
     std::sort(vec.begin(), vec.end(), ascending);
 
-    getTime(vec.begin(), vec.end(),std::sort);
+    getTime(vec.begin(), vec.end(), std::sort);
 }
 
 void resSortDes(int n)
@@ -93,7 +96,7 @@ void resSortDes(int n)
     }
     std::sort(vec.begin(), vec.end(), descending);
 
-    getTime(vec.begin(), vec.end(),std::sort);
+    getTime(vec.begin(), vec.end(), std::sort);
 }
 
 void resStableSort(int n)
@@ -104,7 +107,7 @@ void resStableSort(int n)
         vec.push_back(rand() % 201 - 100);
     }
 
-    getTime(vec.begin(), vec.end(),std::stable_sort);
+    getTime(vec.begin(), vec.end(), std::stable_sort);
 }
 
 void resStableSortAsc(int n)
@@ -116,7 +119,7 @@ void resStableSortAsc(int n)
     }
     std::stable_sort(vec.begin(), vec.end(), ascending);
 
-    getTime(vec.begin(), vec.end(),std::stable_sort);
+    getTime(vec.begin(), vec.end(), std::stable_sort);
 }
 
 void resStableSortDes(int n)
@@ -128,5 +131,7 @@ void resStableSortDes(int n)
     }
     std::stable_sort(vec.begin(), vec.end(), descending);
 
-    getTime(vec.begin(), vec.end(),std::stable_sort);
+    getTime(vec.begin(), vec.end(), std::stable_sort);
 }
+
+#endif

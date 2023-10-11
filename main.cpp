@@ -1,5 +1,4 @@
 #include <iostream>
-#include <algorithm>
 #include "./modules/sorts/Timsort.h"
 #include "./modules/comparators/comparators.h"
 

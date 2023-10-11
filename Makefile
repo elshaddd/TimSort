@@ -1,4 +1,4 @@
-all: main research test clean
+all: main research tests clean
 
 main: 
 	g++ main.cpp -o main
@@ -6,8 +6,8 @@ main:
 research: 
 	g++ research/research.cpp -o research
 	
-test: 
-	g++ tests/test.cpp Node.o -o test
+tests: 
+	g++ tests/tests.cpp Node.o -o tests
 
 clean:
 	rm -f *.o

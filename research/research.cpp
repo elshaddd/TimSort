@@ -1,4 +1,3 @@
-#include <iostream>
 #include "research.h"
 
 int main()
