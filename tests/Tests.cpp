@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "../modules/sorts/Timsort.h"
-#include "../modules/comparators/comparators.h"
+#include "../modules/comparators/Comparators.h"
 
 TEST(TimSortTest, EmptyArray)
 {
@@ -27,8 +27,6 @@ TEST(TimSortTest, DuplicateElements)
         }
         arr.push_back(rand() % 201 - 100);
     }
-
-    std::vector<int> arr = {2, 2, 2, 1, 1, 1};
     timsort(arr.data(), arr.size(), ascending);
     EXPECT_TRUE(std::is_sorted(arr.begin(), arr.end(), ascending));
 }

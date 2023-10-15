@@ -1,7 +1,7 @@
 #ifndef RESEARCH_H
 #define RESEARCH_H
 #include "../modules/sorts/Timsort.h"
-#include "../modules/comparators/comparators.h"
+#include "../modules/comparators/Comparators.h"
 #include <algorithm>
 #include <vector>
 #include <chrono>

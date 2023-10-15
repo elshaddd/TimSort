@@ -1,13 +1,22 @@
-all: main research tests clean
+all: main researches test clean
 
-main: 
-	g++ main.cpp -o main
+main: main.o
+	g++ main.o -o main
 
-research: 
-	g++ research/research.cpp -o research
+test: tests.o 
+	g++ Tests.o -lgtest -o test
 	
-tests: 
-	g++ tests/tests.cpp Node.o -o tests
+researches: research.o
+	g++ Research.o -o researches
+
+
+main.o:
+	g++ -c *.cpp -Imodules
+tests.o:
+	g++ -c tests/*.cpp -lgtest -Imodules
+research.o:
+	g++ -c research/*.cpp -Imodules
+
 
 clean:
 	rm -f *.o

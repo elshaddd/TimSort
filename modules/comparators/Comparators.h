@@ -1,5 +1,6 @@
 #ifndef COMPARATORS_H
 #define COMPARATORS_H
+#include <iostream>
 
 bool ascending(int a, int b)
 {
@@ -19,6 +20,11 @@ bool descending(int a, int b)
         return a > b;
     }
     return f > s;
+}
+
+bool defense(int a, int b)
+{
+    return a < b;
 }
 
 #endif

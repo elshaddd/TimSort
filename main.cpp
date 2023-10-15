@@ -1,6 +1,6 @@
 #include <iostream>
 #include "./modules/sorts/Timsort.h"
-#include "./modules/comparators/comparators.h"
+#include "./modules/comparators/Comparators.h"
 
 int main()
 {
